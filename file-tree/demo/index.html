@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File tree</title>
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../dist/css/file-tree.min.css" rel="stylesheet">
+    <style type="text/css">
+        body{
+            margin-top: 70px;
+        }
+        header{
+            margin-bottom: 40px;
+        }
+
+        .treebuilder{
+            margin-bottom: 60px;
+        }
+
+        #demo p.well.well-sm{
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">File tree</a>
+        </div>
+    </div>
+</div>
+
+<div id="demo" class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            <header>
+                <h2>File tree - Demo page</h2>
+                <p>File tree is a jQuery plugin that aims to make implementation of file tree stuctures easy. File tree provides fixed, sortable and selectable file tree's with Twitter Bootstrap (3) flavour.</p>
+            </header>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Fixed tree</h3>
+            <p class="well well-sm">Click on a filename to open the file (for test purpose this wil redirect to Google)</p>
+            <div id="fixed-tree"></div>
+            <div>
+                <button class="btn btn-default">Serialize</button><br/><br/>
+                <textarea rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h3>Sortable tree</h3>
+            <p class="well well-sm">Drag the folder or file icon to sort the file tree</p>
+            <div id="sortable-tree"></div>
+            <div>
+                <button class="btn btn-default">Serialize</button><br/><br/>
+                <textarea rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h3>Selectable tree</h3>
+            <p class="well well-sm">Select a folder or file by clicking on the name</p>
+            <div id="selectable-tree"></div>
+            <div>
+                <button class="btn btn-default">Serialize</button><br/><br/>
+                <textarea rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/nestedSortable/jquery.mjs.nestedSortable.js"></script>
+<script src="../dist/js/file-tree.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var data = [{
+            id: 'xxx-xx-xxx-root-dir',
+            name: 'Root',
+            type: 'dir',
+            state: 'open',
+            children: [
+                {
+                    id: 'xxx-xx-xxx-sub-dir',
+                    name: 'Sub_dir',
+                    type: 'dir',
+                    state: 'open',
+                    children: [{
+                        id: 'xxx-xx-xxx-deep-test-file',
+                        name: 'Deep_test_file',
+                        type: 'pdf'
+                    }]
+                },{
+                    id: 'xxx-xx-xxx-test_file',
+                    name: 'test_file',
+                    type: 'pdf',
+                    url: 'http://google.be'
+                }
+            ]
+        }];
+
+        var fixedTree = $('#fixed-tree').treebuilder({
+            data: data
+        });
+
+        var sortableTree = $('#sortable-tree').treebuilder({
+            data: data,
+            sortable: true
+        });
+
+        var selectableTree = $('#selectable-tree').treebuilder({
+            data: data,
+            selectable: true
+        });
+
+        selectableTree.bind('itemSelected', function(e, el){
+            console.log(el);
+        });
+
+        console.log($('#tree').treebuilder('serialize'));
+
+    });
+</script>
+</body>
+</html>
